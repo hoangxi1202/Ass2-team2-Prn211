@@ -13,7 +13,10 @@ namespace SalesWinApp
             InitializeComponent();
         }
         public IOrderRepository orderRepository = new OrderRepository();
+        public IOrderDetailRepository orderDetailRepository = new OrderDetailRepository();
+        public IProductRepository productRepository = new ProductRepository();
         public List<Order> OrderList { get; set; }
+        public List<OrderDetail>? OrderListDetail { get; set; }
         public BindingSource? source;
 
         private void frmReport_Load(object sender, EventArgs e)
@@ -97,6 +100,33 @@ namespace SalesWinApp
             }
             return orders;
         }
+        private List<OrderDetail> GetDetailListByID(int id)
+        {
+            List<OrderDetail> orderDetails = new List<OrderDetail>();
+            try
+            {
+
+                orderDetails = orderDetailRepository.GetOrderDetails(id);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            return orderDetails;
+        }
+        private Product GetProduct(int productId)
+        {
+            Product product = new Product();
+            try
+            {
+                product = productRepository.GetProductById(productId);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            return product;
+        }
         private void LoadOrderList(List<Order> order)
         {
 
@@ -121,10 +151,28 @@ namespace SalesWinApp
                 int totalOders = order.Count;
                 foreach (Order o in order)
                 {
-                    if (o.Freight != null)
+                    OrderListDetail = GetDetailListByID(o.OrderId);
+                    if (OrderListDetail != null)
                     {
-                        totalSales += o.Freight;
+                        foreach (OrderDetail od in OrderListDetail)
+                        {
+                            Product product = GetProduct(od.ProductId);
+                            totalSales += od.Quantity * product.UnitPrice;
+                        }
                     }
+
+                }
+                foreach (Order o in order)
+                {
+                    OrderListDetail = GetDetailListByID(o.OrderId);
+                    if (OrderListDetail != null)
+                    {
+                        foreach (OrderDetail od in OrderListDetail)
+                        {
+                            totalProducts += od.Quantity;
+                        }
+                    }
+
                 }
 
                 txtTotalCustomers.Text = totalCustomers.ToString();
@@ -145,6 +193,13 @@ namespace SalesWinApp
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void btnSort_Click(object sender, EventArgs e)
+        {
+            OrderList.OrderBy(x => x.OrderDate);
+            LoadOrderList(OrderList);
+        }
+
         public record ReportError()
         {
             public string? dateError { get; set; }

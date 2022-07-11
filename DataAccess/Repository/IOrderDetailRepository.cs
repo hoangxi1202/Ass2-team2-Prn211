@@ -9,9 +9,10 @@ namespace BusinessObject.Repository
 {
     public interface IOrderDetailRepository
     {
-        public List<OrderDetail>? GetOrderDetails(int orderID);
+        public List<OrderDetail> GetOrderDetails(int orderID);
         public void AddOrderDetail(OrderDetail orderDetail);
         public void UpdateOrderDetail(OrderDetail orderDetail);
         public void DeleteOrderDetail(int orderID, int productID);
+        public int CountProduct(int orderId);
     }
 }

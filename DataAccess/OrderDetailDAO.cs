@@ -38,6 +38,29 @@ public class OrderDetailDAO
         }
         return listOrders;
     }
+    public int CountProduct(int orderID)
+    {
+        List<OrderDetail>? listOrders = new List<OrderDetail>();
+        int count = 0;
+        try
+        {
+            FStoreContext DbContext = new FStoreContext();
+            listOrders = DbContext.OrderDetails.Where(s => s.OrderId == orderID).ToList();
+            if (listOrders.Count == 0)
+                listOrders = null;
+            else {
+                foreach (OrderDetail o in listOrders) {
+                    count += o.Quantity;
+                }
+
+            }
+        }
+        catch (Exception)
+        {
+            throw new Exception("Get count Product details unsuccessfully");
+        }
+        return count;
+    }
 
     public void AddNewOrderDetail(OrderDetail orderDetails)
     {
