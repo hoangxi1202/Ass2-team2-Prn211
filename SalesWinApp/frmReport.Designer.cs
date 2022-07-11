@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            
             this.lbStartDate = new System.Windows.Forms.Label();
             this.lbEndDate = new System.Windows.Forms.Label();
             this.dtStartDate = new System.Windows.Forms.DateTimePicker();
@@ -45,12 +44,9 @@
             this.txtTotalOrders = new System.Windows.Forms.TextBox();
             this.txtTotalCustomers = new System.Windows.Forms.TextBox();
             this.txtTotalProducts = new System.Windows.Forms.TextBox();
+            this.btnSort = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReport)).BeginInit();
             this.SuspendLayout();
-            // 
-            // reportViewer1
-            // 
-
             // 
             // lbStartDate
             // 
@@ -116,7 +112,7 @@
             // 
             // btnPrint
             // 
-            this.btnPrint.Location = new System.Drawing.Point(177, 397);
+            this.btnPrint.Location = new System.Drawing.Point(136, 397);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(132, 46);
             this.btnPrint.TabIndex = 5;
@@ -126,7 +122,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(498, 397);
+            this.btnCancel.Location = new System.Drawing.Point(519, 397);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(132, 46);
             this.btnCancel.TabIndex = 6;
@@ -198,11 +194,22 @@
             this.txtTotalProducts.Size = new System.Drawing.Size(196, 27);
             this.txtTotalProducts.TabIndex = 14;
             // 
+            // btnSort
+            // 
+            this.btnSort.Location = new System.Drawing.Point(326, 397);
+            this.btnSort.Name = "btnSort";
+            this.btnSort.Size = new System.Drawing.Size(147, 44);
+            this.btnSort.TabIndex = 15;
+            this.btnSort.Text = "Sort By OrderDate";
+            this.btnSort.UseVisualStyleBackColor = true;
+            this.btnSort.Click += new System.EventHandler(this.btnSort_Click);
+            // 
             // frmReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 453);
+            this.Controls.Add(this.btnSort);
             this.Controls.Add(this.txtTotalProducts);
             this.Controls.Add(this.txtTotalCustomers);
             this.Controls.Add(this.txtTotalOrders);
@@ -247,5 +254,6 @@
         private TextBox txtTotalOrders;
         private TextBox txtTotalCustomers;
         private TextBox txtTotalProducts;
+        private Button btnSort;
     }
 }

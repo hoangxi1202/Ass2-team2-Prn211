@@ -13,6 +13,9 @@ namespace BusinessObject.Repository
         public void AddOrderDetail(OrderDetail orderDetail)
         => OrderDetailDAO.Instance.AddNewOrderDetail(orderDetail);
 
+        public int CountProduct(int orderId)
+        => OrderDetailDAO.Instance.CountProduct(orderId);
+
         public void DeleteOrderDetail(int orderID, int productID)
         => OrderDetailDAO.Instance.DeleteOrderDetail(orderID, productID);
 
@@ -21,5 +24,6 @@ namespace BusinessObject.Repository
 
         public void UpdateOrderDetail(OrderDetail orderDetail)
         => OrderDetailDAO.Instance.UpdateOrderDetail(orderDetail);
+
     }
 }
