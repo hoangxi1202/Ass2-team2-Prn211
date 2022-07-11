@@ -15,6 +15,8 @@ namespace DataAccess.Repository
         public void DeleteProduct(int productID) => ProductDAO.Instance.DeleteProduct(productID);
         public List<Product> GetListProducts() => ProductDAO.Instance.GetListProducts();
         public void UpdateProduct(Product product) => ProductDAO.Instance.UpdateProduct(product);
+        public List<string> GetProductNames() => ProductDAO.Instance.GetProductsName();
+        public Product GetProductById(int id) => ProductDAO.Instance.GetProduct(id);
 
     }
 }

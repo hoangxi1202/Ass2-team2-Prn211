@@ -34,12 +34,12 @@
             this.lbDiscount = new System.Windows.Forms.Label();
             this.lbPrice = new System.Windows.Forms.Label();
             this.txtOrderID = new System.Windows.Forms.MaskedTextBox();
-            this.txtProductID = new System.Windows.Forms.MaskedTextBox();
             this.txtQuantity = new System.Windows.Forms.MaskedTextBox();
             this.txtDiscount = new System.Windows.Forms.MaskedTextBox();
             this.txtPrice = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.txtProductID = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lbOrderID
@@ -94,13 +94,6 @@
             this.txtOrderID.Size = new System.Drawing.Size(249, 27);
             this.txtOrderID.TabIndex = 5;
             // 
-            // txtProductID
-            // 
-            this.txtProductID.Location = new System.Drawing.Point(148, 84);
-            this.txtProductID.Name = "txtProductID";
-            this.txtProductID.Size = new System.Drawing.Size(249, 27);
-            this.txtProductID.TabIndex = 6;
-            // 
             // txtQuantity
             // 
             this.txtQuantity.Location = new System.Drawing.Point(148, 133);
@@ -146,17 +139,26 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // txtProductID
+            // 
+            this.txtProductID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.txtProductID.FormattingEnabled = true;
+            this.txtProductID.Location = new System.Drawing.Point(148, 84);
+            this.txtProductID.Name = "txtProductID";
+            this.txtProductID.Size = new System.Drawing.Size(249, 28);
+            this.txtProductID.TabIndex = 12;
+            // 
             // frmViewOrderDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(441, 348);
+            this.Controls.Add(this.txtProductID);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtPrice);
             this.Controls.Add(this.txtDiscount);
             this.Controls.Add(this.txtQuantity);
-            this.Controls.Add(this.txtProductID);
             this.Controls.Add(this.txtOrderID);
             this.Controls.Add(this.lbPrice);
             this.Controls.Add(this.lbDiscount);
@@ -179,11 +181,11 @@
         private Label lbDiscount;
         private Label lbPrice;
         private MaskedTextBox txtOrderID;
-        private MaskedTextBox txtProductID;
         private MaskedTextBox txtQuantity;
         private MaskedTextBox txtDiscount;
         private TextBox txtPrice;
         private Button btnSave;
         private Button btnCancel;
+        private ComboBox txtProductID;
     }
 }

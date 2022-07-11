@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Data;
 using BusinessObject.Models;
-using BusinessObject.DataAccess;
 using BusinessObject.Repository;
-using System.Text.RegularExpressions;
 
 namespace SalesWinApp
 {
@@ -82,7 +71,7 @@ namespace SalesWinApp
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
-            btnDelete.Enabled = false;
+            btnDelete.Enabled = true;
             dgvOrderList.CellDoubleClick += DgvOrderList_CellDoubleClick;
             LoadOrderList();
         }
