@@ -79,7 +79,7 @@ public class OrderDAO
         }
         catch (Exception)
         {
-            throw new Exception("Delete a order unsuccessfully");
+            throw new Exception("Delete a order unsuccessfully (Orderdetail must empty)");
         }
     }
 

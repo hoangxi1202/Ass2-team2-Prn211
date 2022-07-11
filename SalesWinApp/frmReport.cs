@@ -196,7 +196,7 @@ namespace SalesWinApp
 
         private void btnSort_Click(object sender, EventArgs e)
         {
-            OrderList.OrderBy(x => x.OrderDate);
+            OrderList = OrderList.OrderBy(x => x.OrderDate).ToList();
             LoadOrderList(OrderList);
         }
 

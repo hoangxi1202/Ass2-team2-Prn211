@@ -7,6 +7,7 @@ namespace SalesWinApp
     public partial class frmOrder : Form
     {
         public IOrderRepository orderRepository = new OrderRepository();
+        public IOrderDetailRepository orderDetailRepository = new OrderDetailRepository();
         public BindingSource? source;
         public frmOrder()
         {

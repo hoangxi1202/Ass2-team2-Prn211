@@ -38,6 +38,7 @@ public class OrderDetailDAO
         }
         return listOrders;
     }
+
     public int CountProduct(int orderID)
     {
         List<OrderDetail>? listOrders = new List<OrderDetail>();
