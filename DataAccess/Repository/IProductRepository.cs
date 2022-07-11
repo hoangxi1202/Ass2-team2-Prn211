@@ -10,9 +10,11 @@ namespace DataAccess.Repository
     public interface IProductRepository
     {
         public List<Product> GetListProducts();
+        public List<string> GetProductNames();
         public void CreateProduct(Product product);
         public void UpdateProduct(Product product);
         public void DeleteProduct(int productID);
-        
+        public Product GetProductById(int id);
+
     }
 }
