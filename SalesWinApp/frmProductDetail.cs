@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-using BusinessObject.Models;
+﻿using BusinessObject.Models;
 using BusinessObject.DataAccess;
-using System.Text.RegularExpressions;
 using DataAccess.Repository;
+using System.Text.RegularExpressions;
 
 namespace SalesWinApp
 {
@@ -24,22 +14,6 @@ namespace SalesWinApp
         public IProductRepository ProductRepository { get; set; }
         public bool InsertOrUpdate { get; set; }
         public Product ProductInfo { get; set; }
-
-        private void frmProductDetail_Load(object sender, EventArgs e)
-        {
-            txtProductID.Enabled = !InsertOrUpdate;
-            if (InsertOrUpdate == true)
-            {
-                txtProductID.Text = ProductInfo.ProductId.ToString();
-                txtCategoryID.Text = ProductInfo.CategoryId.ToString();
-                txtProductName.Text = ProductInfo.ProductName;
-                txtWeight.Text = ProductInfo.Weight;
-                txtUnitPrice.Text = ProductInfo.UnitPrice.ToString();
-                txtUnitsInStock.Text = ProductInfo.UnitsInStock.ToString();
-            }
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e) => Close();
 
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -81,7 +55,7 @@ namespace SalesWinApp
                 if (regex.IsMatch(unitPrice) == false || unitPrice.Trim().Equals("") || decimal.Parse(unitPrice) < 0)
                 {
                     found = true;
-                    errors.UnitPriceError = "Unit Price  must be the number format and greater than 0!";
+                    errors.UnitInStockError = "Unit Price  must be the number format and greater than 0!";
                 }
 
                 string unitInStock = txtUnitsInStock.Text;
@@ -91,13 +65,14 @@ namespace SalesWinApp
                     errors.UnitInStockError = "Unit In Stock must be the number format and greater than 0!";
                 }
 
+
                 if (found)
                 {
                     MessageBox.Show($"{errors.productIDError} \n " +
                         $"{errors.categoryIDError} \n " +
                         $"{errors.productNameError} \n" +
                         $"{errors.weightError} \n" +
-                        $"{errors.UnitPriceError} \n" +
+                        $"{errors.UnitPriceErrsor} \n" +
                         $"{errors.UnitInStockError}", "Add a new product - Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
@@ -120,7 +95,6 @@ namespace SalesWinApp
                         ProductRepository.UpdateProduct(pro);
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -128,13 +102,28 @@ namespace SalesWinApp
             }
         }
 
+        private void btnCancel_Click(object sender, EventArgs e) => Close();
+
+        private void frmProductDetail_Load(object sender, EventArgs e)
+        {
+            txtProductID.Enabled = !InsertOrUpdate;
+            if (InsertOrUpdate == true)
+            {
+                txtProductID.Text = ProductInfo.ProductId.ToString();
+                txtCategoryID.Text = ProductInfo.CategoryId.ToString();
+                txtProductName.Text = ProductInfo.ProductName;
+                txtWeight.Text = ProductInfo.Weight;
+                txtUnitPrice.Text = ProductInfo.UnitPrice.ToString();
+                txtUnitsInStock.Text = ProductInfo.UnitsInStock.ToString();
+            }
+        }
         public record ProductError()
         {
             public string? productIDError { get; set; }
             public string? categoryIDError { get; set; }
             public string? productNameError { get; set; }
             public string? weightError { get; set; }
-            public string? UnitPriceError { get; set; }
+            public string? UnitPriceErrsor { get; set; }
             public string? UnitInStockError { get; set; }
         }
     }

@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Data.SqlClient;
+﻿
 using BusinessObject.Models;
 using BusinessObject.DataAccess;
 using DataAccess.Repository;
-using System.Text.RegularExpressions;
+
 
 namespace SalesWinApp
 {
@@ -23,6 +14,17 @@ namespace SalesWinApp
         }
         public IProductRepository productRepository = new ProductRepository();
         public BindingSource? source;
+        /*
+        public static void FillCombo(string sql, ComboBox cbo, string id, string name)
+        {
+            SqlDataAdapter dap = new SqlDataAdapter(sql, Con);
+            DataTable table = new DataTable();
+            dap.Fill(table);
+            cbo.DataSource = table;
+            cbo.ValueMember = id; //Trường giá trị
+            cbo.DisplayMember = name; //Trường hiển thị
+        }
+        */
         private void ClearText()
         {
             txtProductID.Text = string.Empty;
@@ -72,6 +74,93 @@ namespace SalesWinApp
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void frmProduct_Load(object sender, EventArgs e)
+        {
+            LoadProductList();
+            dgvProduct.CellDoubleClick += dgvProduct_CellDoubleClick;
+        }
+
+
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            frmProductDetail frmProductDetail = new frmProductDetail()
+            {
+                Text = "Add Product",
+                InsertOrUpdate = false,
+                ProductRepository = productRepository
+
+            };
+            if (frmProductDetail.ShowDialog() == DialogResult.OK)
+            {
+                LoadProductList();
+                source.Position = source.Count - 1;
+            }
+        }
+
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            //btnDelete.Enabled = false;
+            LoadProductList();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e) => Close();
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var pro = GetProductObject();
+                productRepository.DeleteProduct(pro.ProductId);
+                var members1 = productRepository.GetListProducts();
+                LoadProductList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Delete a Product");
+            }
+        }
+        private Product GetProductObject()
+        {
+            Product? product = null;
+            try
+            {
+                product = new Product
+                {
+                    ProductId = Convert.ToInt32(txtProductID.Text),
+                    CategoryId = Convert.ToInt32(txtCategoryID.Text),
+                    ProductName = txtProductName.Text,
+                    Weight = txtWeight.Text,
+                    UnitPrice = Convert.ToDecimal(txtUnitPrice.Text),
+                    UnitsInStock = Convert.ToInt32(txtUnitsInStock.Text)
+                };
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Get Product");
+            }
+            return product;
+        }
+
+        private void dgvProduct_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            frmProductDetail frmProductDetail = new frmProductDetail()
+            {
+                Text = "Update Product",
+                InsertOrUpdate = true,
+                ProductInfo = GetProductObject(),
+                ProductRepository = productRepository
+            };
+            if (frmProductDetail.ShowDialog() == DialogResult.OK)
+            {
+                LoadProductList();
+                //
+                source.Position = source.Count - 1;
+            }
+        }
+
         private void LoadProductList(List<Product> products)
         {
             try
@@ -112,99 +201,13 @@ namespace SalesWinApp
                 MessageBox.Show(ex.Message);
             }
         }
-        private Product GetProductObject()
-        {
-            Product? product = null;
-            try
-            {
-                product = new Product
-                {
-                    ProductId = Convert.ToInt32(txtProductID.Text),
-                    CategoryId = Convert.ToInt32(txtCategoryID.Text),
-                    ProductName = txtProductName.Text,
-                    Weight = txtWeight.Text,
-                    UnitPrice = Convert.ToDecimal(txtUnitPrice.Text),
-                    UnitsInStock = Convert.ToInt32(txtUnitsInStock.Text)
-                };
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Get Product");
-            }
-            return product;
-        }
-        private void frmProduct_Load(object sender, EventArgs e)
-        {
-            LoadProductList();
-            dgvProduct.CellDoubleClick += dgvProduct_CellDoubleClick;
-
-        }
-
-        private void btnCreate_Click(object sender, EventArgs e)
-        {
-            frmProductDetail frmProductDetail = new frmProductDetail()
-            {
-                Text = "Add Product",
-                InsertOrUpdate = false,
-                ProductRepository = productRepository
-
-            };
-            if (frmProductDetail.ShowDialog() == DialogResult.OK)
-            {
-                LoadProductList();
-                source.Position = source.Count - 1;
-            }
-        }
-
-        private void btnLoad_Click(object sender, EventArgs e)
-        {
-            LoadProductList();
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e) => Close();
-
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var pro = GetProductObject();
-                productRepository.DeleteProduct(pro.ProductId);
-                var members1 = productRepository.GetListProducts();
-                LoadProductList();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Delete a Product");
-            }
-        }
-
-        private void dgvProduct_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            frmProductDetail frmProductDetail = new frmProductDetail()
-            {
-                Text = "Update Product",
-                InsertOrUpdate = true,
-                ProductInfo = GetProductObject(),
-                ProductRepository = productRepository
-            };
-            if (frmProductDetail.ShowDialog() == DialogResult.OK)
-            {
-                LoadProductList();
-                //
-                source.Position = source.Count - 1;
-            }
-        }
-
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            frmSearchProduct frmSearchProduct = new frmSearchProduct();
+            if (frmSearchProduct.ShowDialog() == DialogResult.OK)
             {
-                frmSearchProduct frmSearchProduct = new frmSearchProduct();
-                if (frmSearchProduct.ShowDialog() == DialogResult.OK)
-                {
-                    List<Product> products = frmSearchProduct.Products;
-                    LoadProductList(products);
-                }
+                List<Product> products = frmSearchProduct.Products;
+                LoadProductList(products);
             }
         }
     }

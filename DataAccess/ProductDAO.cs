@@ -114,5 +114,65 @@ public class ProductDAO
         }
         return product;
     }
+    public List<Product> GetProductsByUnitPrice(decimal p1, decimal p2)
+    {
+        List<Product> listProducts = new List<Product>();
+        if (p1 > p2)
+        {
+            var p = p1;
+            p1 = p2;
+            p2 = p;
+        }
+        try
+        {
+            FStoreContext DbContext = new FStoreContext();
+            listProducts = DbContext.Products
+                    .Where(a => a.UnitPrice <= p2 && a.UnitPrice >= p1)
+                    .ToList();
+        }
+        catch (Exception)
+        {
+            throw new Exception("Get list by unit price fail");
+        }
+        return listProducts;
+    }
+    public List<Product> GetProductsByUnitsInStock(int p1, int p2)
+    {
+        List<Product> listProducts = new List<Product>();
+        if (p1 > p2)
+        {
+            var p = p1;
+            p1 = p2;
+            p2 = p;
+        }
+        try
+        {
+            FStoreContext DbContext = new FStoreContext();
+            listProducts = DbContext.Products
+                    .Where(a => a.UnitsInStock <= p2 && a.UnitsInStock >= p1)
+                    .ToList();
+        }
+        catch (Exception)
+        {
+            throw new Exception("Get list by unit in stock fail");
+        }
+        return listProducts;
+    }
 
+    public List<Product> GetProductsByName(string name)
+    {
+        List<Product> listProducts = new List<Product>();
+        try
+        {
+            FStoreContext DbContext = new FStoreContext();
+            listProducts = DbContext.Products
+                    .Where(a => a.ProductName.Contains(name))
+                    .ToList();
+        }
+        catch (Exception)
+        {
+            throw new Exception("Get list by name fail");
+        }
+        return listProducts;
+    }
 }

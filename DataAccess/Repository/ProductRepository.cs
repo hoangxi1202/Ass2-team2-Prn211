@@ -17,6 +17,10 @@ namespace DataAccess.Repository
         public void UpdateProduct(Product product) => ProductDAO.Instance.UpdateProduct(product);
         public List<string> GetProductNames() => ProductDAO.Instance.GetProductsName();
         public Product GetProductById(int id) => ProductDAO.Instance.GetProduct(id);
+        public List<Product> GetProductByUnitInStock(int p1, int p2) => ProductDAO.Instance.GetProductsByUnitsInStock(p1, p2);
+
+        public List<Product> GetProductByUnitPrice(decimal p1, decimal p2) => ProductDAO.Instance.GetProductsByUnitPrice(p1, p2);
+        public List<Product> GetProductsByName(string name) => ProductDAO.Instance.GetProductsByName(name);
 
     }
 }
