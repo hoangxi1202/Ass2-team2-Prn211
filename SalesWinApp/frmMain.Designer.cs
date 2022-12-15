@@ -64,7 +64,7 @@
             // mnExit
             // 
             this.mnExit.Name = "mnExit";
-            this.mnExit.Size = new System.Drawing.Size(116, 26);
+            this.mnExit.Size = new System.Drawing.Size(224, 26);
             this.mnExit.Text = "Exit";
             this.mnExit.Click += new System.EventHandler(this.mnExit_Click);
             // 

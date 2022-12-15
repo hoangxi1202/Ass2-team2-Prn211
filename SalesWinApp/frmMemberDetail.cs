@@ -15,6 +15,8 @@ namespace SalesWinApp
             InitializeComponent();
         }
 
+        BindingSource source;
+
         private void frmMemberDetail_Load(object sender, EventArgs e)
         {
             txtMemberId.Enabled = !InsertOrUpdate;
